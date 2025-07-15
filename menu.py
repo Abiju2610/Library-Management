@@ -1,3 +1,6 @@
+import sys
+import time
+
 class Menu:
 
     def systemMenuDisplay(self):
@@ -9,7 +12,7 @@ class Menu:
 
         print(f"| {'(1) Add Books':<{width - 4}} |")
         print(f"| {'(2) View Books':<{width - 4}} |")
-        print(f"| {'(3) Done':<{width - 4}} |")
+        print(f"| {'(3) Exit':<{width - 4}} |")
         print('-' * width)
 
     
@@ -29,10 +32,13 @@ class Menu:
 
             if choice == "1":
                 add_book = AddBook()
-                add_book.add_book("library.txt")
+                add_book.add_book()
 
             elif choice == "2":
                 view_books = ViewBooks()
-                view_books.view_all_books("library.txt")
+                view_books.view_all_books()
             else:
+                print("Exiting...")
+                time.sleep(2)
                 menuDone = True
+                sys.exit()

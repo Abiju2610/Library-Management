@@ -1,11 +1,11 @@
 import sys
+from db import get_db_connection
 
 class AddBook:
-    with open("library.txt", "a") as f:
-        pass
 
-    def get_next_book_id(self, filename):
+    def get_next_book_id(self):
         try:
+            """
             with open(filename, "r") as f:
                 lines = f.readlines()
 
@@ -15,32 +15,46 @@ class AddBook:
                     return last_id + 1
                 else:
                     return 1000
-        except FileNotFoundError:
+                    """
+            mydb = get_db_connection()
+            mycursor = mydb.cursor()
+            mycursor.execute("SELECT ID FROM books ORDER BY ID DESC LIMIT 1")
+            lastID = mycursor.fetchone()
+
+            if lastID is not None:
+                return lastID[0] + 1
+            else:
+                return 1000 
+
+        except Exception as e:
+            print("Error getting next book ID:", e)
             return 1000
         
-    def add_book(self, filename):
+    def add_book(self):
         book_name = input("\nEnter Book Name: ").strip()
         book_author = input("\nEnter Book Author: ").strip()
 
-        next_id = self.get_next_book_id(filename)
+        next_id = self.get_next_book_id()
 
+        """
         with open(filename, "a") as f:
             f.write(f"{next_id}, {book_name}, {book_author}\n")
+        """
+
+        mydb = get_db_connection()
+        mycursor = mydb.cursor()
+        
+        sqlFormula = "INSERT INTO books (ID, book_name, book_author) VALUES (%s, %s, %s)"
+        added_book = (next_id, book_name, book_author)
+
+        mycursor.execute(sqlFormula, added_book)
+        mydb.commit()
 
         print("\nBook added successfully...")
         self.continue_menu()
 
 
     def continue_menu(self):
-        """
-        to_menu = ""
-
-        while to_menu != "y" and to_menu != "Y" and to_menu != "n" and to_menu != "N":
-            to_menu = input("\nWould you like to continue to the main menu (y/n): ")
-        
-        if to_menu.lower == "y":
-            self.add_menu
-        """
 
         while True:
             to_menu = input("\nWould you like to continue to the main menu (y/n): ").strip().lower()
