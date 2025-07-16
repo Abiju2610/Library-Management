@@ -39,6 +39,6 @@ class Menu:
                 view_books.view_all_books()
             else:
                 print("Exiting...")
-                time.sleep(2)
+                time.sleep(1)
                 menuDone = True
                 sys.exit()

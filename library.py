@@ -1,9 +1,9 @@
-from menu import Menu
+from admin import Admin
 
 
 def main():
-    mainmenu = Menu()
-    mainmenu.displayMenu()
+    login = Admin()
+    login.adminLogin()
 
 if __name__ == "__main__":
     main()

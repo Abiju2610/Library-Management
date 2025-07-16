@@ -5,17 +5,6 @@ class AddBook:
 
     def get_next_book_id(self):
         try:
-            """
-            with open(filename, "r") as f:
-                lines = f.readlines()
-
-                if lines:
-                    last_line = lines[-1].strip()
-                    last_id = int(last_line.split(",")[0])
-                    return last_id + 1
-                else:
-                    return 1000
-                    """
             mydb = get_db_connection()
             mycursor = mydb.cursor()
             mycursor.execute("SELECT ID FROM books ORDER BY ID DESC LIMIT 1")
@@ -36,10 +25,6 @@ class AddBook:
 
         next_id = self.get_next_book_id()
 
-        """
-        with open(filename, "a") as f:
-            f.write(f"{next_id}, {book_name}, {book_author}\n")
-        """
 
         mydb = get_db_connection()
         mycursor = mydb.cursor()
