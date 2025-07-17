@@ -1,3 +1,4 @@
+
 from db import get_db_connection
 from menu import Menu
 import time
@@ -36,3 +37,4 @@ class Admin:
 
         except Exception as e:
             print(f"Error: {e}")
+            
